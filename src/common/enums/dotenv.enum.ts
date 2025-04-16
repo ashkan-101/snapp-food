@@ -1,0 +1,10 @@
+export enum DOT_ENV {
+  //APP
+  APP_URL = 'APP_URL',
+  APP_PORT = 'APP_PORT',
+  //DB 
+  DB_HOST = 'DB_HOST',
+  DB_PORT = 'DB_PORT',
+  DB_USERNAME = 'DB_USERNAME',
+  DB_PASSWORD = 'DB_PASSWORD',
+}
