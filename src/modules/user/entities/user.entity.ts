@@ -1,6 +1,7 @@
 import { BaseEntity } from "src/common/abstracts/Base-Entity.abstract";
 import { EntityName } from "src/common/enums/entity-name.enum";
-import { Column, Entity } from "typeorm";
+import { Column, Entity, OneToMany } from "typeorm";
+import { UserAddressEntity } from "./user-address.entity";
 
 @Entity(EntityName.USER)
 export class UserEntity extends BaseEntity{
@@ -24,4 +25,8 @@ export class UserEntity extends BaseEntity{
 
   @Column({ nullable: true })
   agentId: number
+
+  //relations
+  @OneToMany(()=> UserAddressEntity, address => address.user)
+  addresses: UserAddressEntity[]
 }
