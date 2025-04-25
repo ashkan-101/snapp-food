@@ -17,7 +17,7 @@ export class CategoryEntity extends BaseEntity{
   isActive: boolean
 
   @Column({ nullable: true })
-  parent_id: string
+  parent_id: number
   
   //relations
   @ManyToOne(() => CategoryEntity, category => category.children, {onDelete: 'CASCADE'})

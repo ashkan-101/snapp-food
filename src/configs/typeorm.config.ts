@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { TypeOrmModuleOptions, TypeOrmOptionsFactory} from '@nestjs/typeorm'
+import { join } from 'path';
 import { DOT_ENV } from 'src/common/enums/dotenv.enum';
 
 @Injectable()
@@ -18,7 +19,7 @@ export class TypeormOptions implements TypeOrmOptionsFactory {
       password: this.configService.get<string>(DOT_ENV.DB_PASSWORD),
       database: 'snapp-food',
       synchronize: true,
-      entities: [ 'dist/**/**/*.entity{.ts, .js}' ]
+      entities: [ 'dist/**/**/*.entity{.js,.ts}' ]
     }
   }  
 }
