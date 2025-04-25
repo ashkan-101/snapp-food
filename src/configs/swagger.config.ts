@@ -1,11 +1,11 @@
 import { INestApplication } from "@nestjs/common";
-import { NestExpressApplication } from "@nestjs/platform-express";
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 
 
 export const swaggerInit = (app: INestApplication): void => {
   const config = new DocumentBuilder()
-  .setTitle('snapp-food_API')
+  .setTitle('snapp-food')
+  .setDescription('api-document for snapp-food')
   .setVersion('1.0.0')
   .addBearerAuth({
     type: 'http',
