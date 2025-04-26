@@ -1,4 +1,4 @@
-import { ConflictException, Injectable } from "@nestjs/common";
+import { ConflictException, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { CategoryEntity } from "./entities/category.entity";
 import { Repository } from "typeorm";
@@ -40,15 +40,32 @@ export class CategoryService {
       throw new ConflictException('category already exist')
     }
 
+    let parent: null | CategoryEntity = null
+    if(data.parent_id && !isNaN(data.parent_id)){
+      parent = await this.findCategoryById(data.parent_id)
+    }
+
     const { url } = await this.s3Service.uploadFile(image, 'images')
 
     const categoryData: Partial<CategoryEntity> = {
       title: data.title,
-      parent_id: data.parent_id,
+      parent_id: parent?.id,
       slug,
       image: url
     }
     const newCategory = this.categoryRepository.create(categoryData)
     return await this.categoryRepository.save(newCategory)
+  }
+
+  public async findCategoryById(id: number){
+    const category = await this.categoryRepository.findOne({
+      where: { id }
+    })
+
+    if(!category){
+      throw new NotFoundException()
+    }
+
+    return category
   }
 }
