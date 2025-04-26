@@ -20,7 +20,7 @@ export class CategoryService {
     .replace(/[\s_\u200C]+/g, '-')
     .replace(/-+/g, '-')
     .replace(/^-+|-+$/g, '')
-    + '-' + Math.random().toString(36).substring(2, 6);
+    + '-' + Math.random().toString(36).substring(2, 8);
 
     const validateUniqueSlug = await this.categoryRepository.existsBy({ slug })
 
@@ -67,5 +67,15 @@ export class CategoryService {
     }
 
     return category
+  }
+
+  public async findAll(){
+    const [ categories, totalCount ]  = await this.categoryRepository.findAndCount({
+      relations: ['parent', 'parent.parent']
+    })
+
+    return {
+      categories
+    }
   }
 }

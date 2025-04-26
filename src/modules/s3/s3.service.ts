@@ -18,8 +18,6 @@ export class S3Service {
       endpoint: this.configService.get<string>(DOT_ENV.S3_ENDPOINT),
       region: 'default'
     })
-
-    console.log(this.configService.get<string>(DOT_ENV.S3_ACCSESS_KEY) as string);
   }
 
   public async uploadFile(file: Express.Multer.File, folderName: string){

@@ -1,4 +1,4 @@
-import { Body, Controller, Post, UseInterceptors } from "@nestjs/common";
+import { Body, Controller, Get, Post, UseInterceptors } from "@nestjs/common";
 import { CategoryService } from "./category.service";
 import { CreateCategoryDTO } from "./dtos/create-category.dto";
 import { ApiBody, ApiConsumes, ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
@@ -28,6 +28,16 @@ export class CategoryController {
     @ValidateFile(10, IMAGE_MIME_TYPES.ALL_RegExp) image: Express.Multer.File
   ){
     return await this.categoryService.createNewCategory(body, image)
+  }
+
+  @ApiOperation({ summary: 'get all categories with pagination' })
+  @ApiResponse({
+    status: 200,
+    description: 'get all categories'
+  })
+  @Get()
+  async getAll(){
+    return await this.categoryService.findAll()
   }
 }
 
